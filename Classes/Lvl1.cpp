@@ -23,9 +23,6 @@ Scene* MyWorld::createScene()
     return scene;
 }
 
-// Print useful error message instead of segfaulting when files are not there
-
-// on "init" you need to initialize your instance
 bool MyWorld::init()
 {
     if (!Layer::init())
@@ -33,18 +30,15 @@ bool MyWorld::init()
         return false;
     }
 
-    //------------------------------------------------------------create backgroud color-------------------------------------------------
 
     LayerColor* _bgColor = LayerColor::create(Color4B(206, 248, 252, 255));
     this->addChild(_bgColor, -10);
 
-    //---------------------------------------------create variables for positioning our instance-------------------------------------------------------
 
     auto visibleSize = Director::getInstance()->getWinSize();
     
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    //-------------------------------------------------create an edge box for our game------------------------------------------------------
 
     auto edgebody = PhysicsBody::createEdgeBox(visibleSize, PHYSICSBODY_MATERIAL_DEFAULT, 3);
     edgebody->setCollisionBitmask(3);
@@ -102,7 +96,6 @@ bool MyWorld::init()
     eventListener->onKeyPressed = [=](EventKeyboard::KeyCode keyCode, Event* event) {
      
             switch (keyCode) {
-                //case wich key is pressed
             case EventKeyboard::KeyCode::KEY_LEFT_ARROW: 
             case EventKeyboard::KeyCode::KEY_A:
                
@@ -156,7 +149,6 @@ bool MyWorld::init()
     {
    
             switch (keyCode) {
-                //case wich key is pressed
             case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
             case EventKeyboard::KeyCode::KEY_A:
                 ifApressed = false;
@@ -191,9 +183,7 @@ bool MyWorld::init()
     };
 
     this->_eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, this);
-    //we create a contact listener to detect the collision of the ball with te walls and the obstacles
     auto contactListener = EventListenerPhysicsContact::create();
-    //make a call back to the function everytime a contact happen
     contactListener->onContactBegin = CC_CALLBACK_1(MyWorld::onContactBegin, this);
     this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(contactListener, this);
     return true;
@@ -325,6 +315,5 @@ void MyWorld::update(float dt) {
             Director::getInstance()->replaceScene(TransitionFade::create(0.2, scene));
         }
 
-        //condition to moove to next level 
 
 }
